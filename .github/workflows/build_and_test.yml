@@ -2,7 +2,7 @@ on: [push, pull_request]
 name: Build and Test check
 jobs:
   check-arm:
-    name: cargo-check
+    name: cargo-check (ARM)
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -11,11 +11,31 @@ jobs:
           target: thumbv8m.main-none-eabihf
       - run: cargo build --target=thumbv8m.main-none-eabihf
   check-riscv:
-    name: cargo-check
+    name: cargo-check (RISC-V)
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
         with:
           target: riscv32imac-unknown-none-elf
+      - run: cargo build --target=riscv32imac-unknown-none-elf
+  check-arm-msrv:
+    name: cargo-check on MSRV (ARM)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          target: thumbv8m.main-none-eabihf
+          toolchain: 1.81.0
+      - run: cargo build --target=thumbv8m.main-none-eabihf
+  check-riscv-msrv:
+    name: cargo-check on MSRV (RISC-V)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          target: riscv32imac-unknown-none-elf
+          toolchain: 1.81.0
       - run: cargo build --target=riscv32imac-unknown-none-elf

@@ -7,9 +7,10 @@ jobs:
       RUSTFLAGS: "-D warnings -Aclippy::needless_lifetimes"
     steps:
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@master
         with:
           target: thumbv8m.main-none-eabihf
+          toolchain: 1.81.0
           components: clippy
       - run: cargo clippy --target=thumbv8m.main-none-eabihf
   clippy-check-riscv:
@@ -18,8 +19,9 @@ jobs:
       RUSTFLAGS: "-D warnings -Aclippy::needless_lifetimes"
     steps:
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@master
         with:
           target: riscv32imac-unknown-none-elf
+          toolchain: 1.81.0
           components: clippy
       - run: cargo clippy --target=riscv32imac-unknown-none-elf
